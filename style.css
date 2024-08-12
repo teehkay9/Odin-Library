@@ -40,13 +40,18 @@ caption {
   margin-bottom: 12px;
 }
 
-.main-right {
+.main-right,
+form {
   padding: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 6px;
+}
+
+form {
+  background-color: lightgray;
 }
 
 .add-button {
