@@ -5,7 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
   </head>
-  <body></body>
+  <body>
+    <h1>My personal Library</h1>
+    <div class="main">
+      <div class="main-library">
+        <table>
+          <caption>
+            Library
+          </caption>
+          <thead>
+            <tr>
+              <th scope="column">Title</th>
+              <th scope="column">Author</th>
+              <th scope="column">Pages</th>
+              <th scope="column">read</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="main-right">
+        <button class="add-button">Add Book</button>
+        <label for="">Title</label>
+        <input type="text" />
+        <label for="">Author</label>
+        <input type="text" />
+        <label for="">Pages</label>
+        <input type="text" />
+        <label for="Read">Read Status</label>
+        <input type="text" placeholder="Type 'yes' or 'no'" />
+        <input type="submit" />
+      </div>
+    </div>
+  </body>
 </html>

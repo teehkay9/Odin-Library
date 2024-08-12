@@ -1,5 +1,7 @@
 const myLibrary = [];
+const libraryTable = document.querySelector("table");
 
+// constructor function for Book object
 function Book(title, author, pages, readStatus) {
   this.title = title;
   this.author = author;
@@ -9,18 +11,28 @@ function Book(title, author, pages, readStatus) {
 const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 265, "not read yet");
 const theAlchemist = new Book("The Alchemist", "Paulo Coelho", 444, "read");
 
-myLibrary.push(theHobbit);
-myLibrary.push(theAlchemist);
-
-function addBookToLibrary() {
-  // get user's input for book details
-  bookTitle = prompt("Please enter the title of the book.");
-  bookAuthor = prompt("Please enter the author of the book.");
-  bookPages = prompt("Please enter the number of pages the book has.");
-  bookStatus = prompt("Enter 'read' if you've read the book, otherwise enter 'not read'.");
-
-  // create a Book object and add it to library
-  const newBook = new Book(bookTitle, bookAuthor, bookPages, bookStatus);
-
+function addBookToLibrary(newBook) {
   myLibrary.push(newBook);
 }
+
+// Populate the table with the books in the library
+function displayBooks() {
+  for (let book of myLibrary) {
+    const newRow = document.createElement("tr");
+
+    // Create table cells with book information
+    for (let key in book) {
+      let bookInfo = document.createElement("td"); // Correctly create a <td> element
+      bookInfo.textContent = book[key]; // Correctly access the property value
+      newRow.appendChild(bookInfo); // Append <td> to the <tr>
+    }
+
+    // Append the new row to the table
+    libraryTable.appendChild(newRow);
+  }
+}
+
+addBookToLibrary(theHobbit);
+addBookToLibrary(theAlchemist);
+
+displayBooks();
