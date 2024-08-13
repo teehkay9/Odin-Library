@@ -24,14 +24,15 @@ function displayBooks() {
   });
 
   // add new table row
-  for (let book of myLibrary) {
+  for (let i = 0; i < myLibrary.length; i++) {
+    const currentBook = myLibrary[i];
     const newRow = document.createElement("tr");
-    newRow.classList.add("book-row");
+    newRow.classList.add(`array-index-${i}`, "book-row");
 
     // Create table cells with book information
-    for (let key in book) {
+    for (let key in currentBook) {
       let bookInfo = document.createElement("td"); // Correctly create a <td> element
-      bookInfo.textContent = book[key]; // Correctly access the property value
+      bookInfo.textContent = currentBook[key]; // Correctly access the property value
       newRow.appendChild(bookInfo); // Append <td> to the <tr>
     }
     // add a remove button at the end of each row
@@ -43,6 +44,24 @@ function displayBooks() {
     removeButton.textContent = "X";
 
     removeButtonCell.appendChild(removeButton);
+
+    // add event Listener to the remove button
+    removeButton.addEventListener("click", function (event) {
+      const clickedButton = event.target;
+      // get the nearest ancestor <tr> element
+      const tableRow = clickedButton.closest("tr");
+
+      if (tableRow) {
+        tableRow.remove();
+
+        // delete the object in myLibrary array
+        // retrieve dynamic part of the "array-index" class
+        const arrayIndexClass = Array.from(newRow.classList).find((className) => className.startsWith("array-index-"));
+        const index = arrayIndexClass.split("-")[2];
+        myLibrary.splice(index, 1);
+        displayBooks();
+      }
+    });
 
     newRow.appendChild(removeButtonCell);
 
