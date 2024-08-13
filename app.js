@@ -34,6 +34,17 @@ function displayBooks() {
       bookInfo.textContent = book[key]; // Correctly access the property value
       newRow.appendChild(bookInfo); // Append <td> to the <tr>
     }
+    // add a remove button at the end of each row
+    const removeButtonCell = document.createElement("td");
+    removeButtonCell.classList.add("remove-button-cell");
+
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("remove-button");
+    removeButton.textContent = "X";
+
+    removeButtonCell.appendChild(removeButton);
+
+    newRow.appendChild(removeButtonCell);
 
     // Append the new row to the table
     libraryTable.appendChild(newRow);
