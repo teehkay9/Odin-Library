@@ -17,8 +17,16 @@ function addBookToLibrary(newBook) {
 
 // Populate the table with the books in the library
 function displayBooks() {
+  // reset the current table
+  const bookRows = document.querySelectorAll(".book-row");
+  bookRows.forEach((book) => {
+    book.remove();
+  });
+
+  // add new table row
   for (let book of myLibrary) {
     const newRow = document.createElement("tr");
+    newRow.classList.add("book-row");
 
     // Create table cells with book information
     for (let key in book) {
@@ -114,10 +122,34 @@ document.querySelector(".add-button").addEventListener("click", function () {
 
     // Append the form to the main-right container
     mainRight.appendChild(form);
+
+    // Create an event listener for the submit button
+    submitButton.addEventListener("click", function () {
+      const title = titleInput.value;
+      const author = authorInput.value;
+      const pages = pagesInput.value;
+      const read = readInput.value;
+
+      // Clear the form inputs
+      titleInput.value = "";
+      authorInput.value = "";
+      pagesInput.value = "";
+      readInput.value = "";
+
+      const newBook = new Book(title, author, pages, read);
+      addBookToLibrary(newBook);
+      displayBooks();
+
+      // Clear the form inputs
+      titleInput.value = "";
+      authorInput.value = "";
+      pagesInput.value = "";
+      readInput.value = "";
+    });
   }
 });
 
-addBookToLibrary(theHobbit);
-addBookToLibrary(theAlchemist);
+// addBookToLibrary(theHobbit);
+// addBookToLibrary(theAlchemist);
 
 displayBooks();
