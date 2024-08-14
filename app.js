@@ -59,6 +59,8 @@ function displayBooks() {
         const arrayIndexClass = Array.from(newRow.classList).find((className) => className.startsWith("array-index-"));
         const index = arrayIndexClass.split("-")[2];
         myLibrary.splice(index, 1);
+
+        // update the table rows with new indices in case of array index shifting
         displayBooks();
       }
     });
