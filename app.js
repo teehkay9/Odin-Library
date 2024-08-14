@@ -8,8 +8,11 @@ function Book(title, author, pages, readStatus) {
   this.pages = pages;
   this.readStatus = readStatus;
 }
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 265, "not read yet");
-const theAlchemist = new Book("The Alchemist", "Paulo Coelho", 444, "read");
+
+// toggle read Status for Book objects
+Book.prototype.toggleReadStatus = function () {
+  this.readStatus = this.readStatus === "yes" ? "no" : "yes";
+};
 
 function addBookToLibrary(newBook) {
   myLibrary.push(newBook);
@@ -31,8 +34,27 @@ function displayBooks() {
 
     // Create table cells with book information
     for (let key in currentBook) {
-      let bookInfo = document.createElement("td"); // Correctly create a <td> element
-      bookInfo.textContent = currentBook[key]; // Correctly access the property value
+      const bookInfo = document.createElement("td");
+
+      // check if the key is 'readStatus'
+      if (key === "readStatus") {
+        // Create a checkbox element
+        const readCheckBox = document.createElement("input");
+        readCheckBox.type = "checkbox";
+        readCheckBox.checked = currentBook.readStatus === "yes";
+
+        // add event Listener to checkbox
+        readCheckBox.addEventListener("click", function () {
+          currentBook.toggleReadStatus();
+          console.log(`Read status for "${currentBook.title}" changed to: ${currentBook.readStatus}`);
+          displayBooks();
+        });
+
+        bookInfo.appendChild(readCheckBox);
+      } else if (!currentBook.hasOwnProperty(key)) continue;
+      else {
+        bookInfo.textContent = currentBook[key];
+      }
       newRow.appendChild(bookInfo); // Append <td> to the <tr>
     }
     // add a remove button at the end of each row
@@ -195,8 +217,3 @@ document.querySelector(".add-button").addEventListener("click", function () {
     });
   }
 });
-
-// addBookToLibrary(theHobbit);
-// addBookToLibrary(theAlchemist);
-
-displayBooks();
