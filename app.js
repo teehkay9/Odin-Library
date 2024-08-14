@@ -44,7 +44,6 @@ function displayBooks() {
     removeButton.textContent = "X";
 
     removeButtonCell.appendChild(removeButton);
-
     // add event Listener to the remove button
     removeButton.addEventListener("click", function (event) {
       const clickedButton = event.target;
@@ -122,16 +121,34 @@ document.querySelector(".add-button").addEventListener("click", function () {
     pagesInput.setAttribute("id", "pages");
     pagesInput.setAttribute("name", "pages");
 
-    // Create the label and input for Read Status
-    const readLabel = document.createElement("label");
-    readLabel.setAttribute("for", "read");
-    readLabel.textContent = "Read Status";
+    // Create the label and radio buttons for Read Status
+    const containerRadBtns = document.createElement("div");
+    containerRadBtns.classList.add("container-radio");
 
-    const readInput = document.createElement("input");
-    readInput.setAttribute("type", "text");
-    readInput.setAttribute("placeholder", "Type 'yes' or 'no'");
-    readInput.setAttribute("id", "read");
-    readInput.setAttribute("name", "read");
+    const radBtnHead = document.createElement("label");
+    radBtnHead.textContent = "Read?";
+
+    const readYesRadBtnLabel = document.createElement("label");
+    readYesRadBtnLabel.setAttribute("for", "yes");
+    readYesRadBtnLabel.textContent = "Yes";
+
+    const readNoRadBtnLabel = document.createElement("label");
+    readNoRadBtnLabel.setAttribute("for", "no");
+    readNoRadBtnLabel.textContent = "No";
+
+    const readYesRadBtn = document.createElement("input");
+    readYesRadBtn.setAttribute("type", "radio");
+    readYesRadBtn.setAttribute("name", "readStatus");
+    readYesRadBtn.setAttribute("id", "yes");
+    readYesRadBtn.setAttribute("value", "yes");
+    readYesRadBtn.setAttribute("required", "true");
+
+    const readNoRadBtn = document.createElement("input");
+    readNoRadBtn.setAttribute("type", "radio");
+    readNoRadBtn.setAttribute("name", "readStatus");
+    readNoRadBtn.setAttribute("id", "no");
+    readNoRadBtn.setAttribute("value", "no");
+    readNoRadBtn.setAttribute("required", "true");
 
     // Create the Submit button
     const submitButton = document.createElement("button");
@@ -146,8 +163,12 @@ document.querySelector(".add-button").addEventListener("click", function () {
     form.appendChild(authorInput);
     form.appendChild(pagesLabel);
     form.appendChild(pagesInput);
-    form.appendChild(readLabel);
-    form.appendChild(readInput);
+    form.appendChild(radBtnHead);
+    form.appendChild(containerRadBtns);
+    containerRadBtns.appendChild(readYesRadBtnLabel);
+    containerRadBtns.appendChild(readYesRadBtn);
+    containerRadBtns.appendChild(readNoRadBtnLabel);
+    containerRadBtns.appendChild(readNoRadBtn);
 
     // Append the submit button to the form
     form.appendChild(submitButton);
@@ -160,23 +181,17 @@ document.querySelector(".add-button").addEventListener("click", function () {
       const title = titleInput.value;
       const author = authorInput.value;
       const pages = pagesInput.value;
-      const read = readInput.value;
+
+      // get value of checked radio button
+      const selectedReadStatus = document.querySelector('input[name="readStatus"]:checked');
+      const read = selectedReadStatus.value;
 
       // Clear the form inputs
-      titleInput.value = "";
-      authorInput.value = "";
-      pagesInput.value = "";
-      readInput.value = "";
+      form.reset();
 
       const newBook = new Book(title, author, pages, read);
       addBookToLibrary(newBook);
       displayBooks();
-
-      // Clear the form inputs
-      titleInput.value = "";
-      authorInput.value = "";
-      pagesInput.value = "";
-      readInput.value = "";
     });
   }
 });
